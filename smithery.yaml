@@ -1,6 +1,4 @@
 version: 1
-build:
-  dockerfile: Dockerfile
 configSchema:
   type: object
   properties:
@@ -31,17 +29,9 @@ configSchema:
 startCommand:
   type: stdio
   commandFunction: |
-    function getCommand(config) {
+    function getCommand() {
       return {
         command: "node",
-        args: ["index.js"],
-        env: {
-          MYSQL_HOST: config.mysql_host || "localhost",
-          MYSQL_PORT: String(config.mysql_port || 3306),
-          MYSQL_USER: config.mysql_user,
-          MYSQL_PASSWORD: config.mysql_password,
-          MYSQL_DATABASE: config.mysql_database || "",
-          SERVER_TYPE: config.server_type || "http"
-        }
-      };
+        args: ["index.js"]
+      }
     } 
