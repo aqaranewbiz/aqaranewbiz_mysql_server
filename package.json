@@ -1,0 +1,17 @@
+{
+  "name": "mysql-mcp-server",
+  "version": "1.0.0",
+  "description": "MySQL MCP Server for Smithery AI",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "mysql2": "^3.6.5",
+    "ws": "^8.15.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+} 
