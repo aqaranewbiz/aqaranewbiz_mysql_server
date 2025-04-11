@@ -1,37 +1,53 @@
 version: 1
-configSchema:
-  type: object
-  properties:
-    mysql_host:
-      type: string
-      description: MySQL server host
-      default: localhost
-    mysql_port:
-      type: integer
-      description: MySQL server port
-      default: 3306
-    mysql_user:
-      type: string
-      description: MySQL username
-    mysql_password:
-      type: string
-      description: MySQL password
-      format: password
-    mysql_database:
-      type: string
-      description: Default MySQL database
-    server_type:
-      type: string
-      description: Server type to run (websocket or http)
-      enum: [websocket, http]
-      default: http
-  required: [mysql_user, mysql_password]
 startCommand:
   type: stdio
-  commandFunction: |
-    function getCommand() {
-      return {
-        command: "node",
-        args: ["index.js"]
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    required:
+      - mysqlHost
+      - mysqlUser
+      - mysqlPassword
+      - mysqlDatabase
+    properties:
+      mysqlHost:
+        type: string
+        description: Hostname for the MySQL server
+        default: localhost
+      mysqlPort:
+        type: integer
+        description: Port for the MySQL server
+        default: 3306
+      mysqlUser:
+        type: string
+        description: MySQL user name
+      mysqlPassword:
+        type: string
+        description: MySQL user's password
+        format: password
+      mysqlDatabase:
+        type: string
+        description: MySQL database name
+      serverType:
+        type: string
+        description: Server type to run (websocket or http)
+        enum: [websocket, http]
+        default: http
+  commandFunction: |-
+    (config) => ({
+      command: 'node',
+      args: ['index.js'],
+      env: {
+        MYSQL_HOST: config.mysqlHost,
+        MYSQL_PORT: String(config.mysqlPort || 3306),
+        MYSQL_USER: config.mysqlUser,
+        MYSQL_PASSWORD: config.mysqlPassword,
+        MYSQL_DATABASE: config.mysqlDatabase,
+        SERVER_TYPE: config.serverType || "http"
       }
-    } 
+    })
+  exampleConfig:
+    mysqlHost: localhost
+    mysqlUser: example_user
+    mysqlPassword: example_password
+    mysqlDatabase: example_db 

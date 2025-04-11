@@ -9,6 +9,10 @@ const MYSQL_USER = process.env.MYSQL_USER || '';
 const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD || '';
 const MYSQL_DATABASE = process.env.MYSQL_DATABASE || '';
 
+// 환경 변수 로그
+console.error(`MySQL 설정: 호스트=${MYSQL_HOST}, 포트=${MYSQL_PORT}, 사용자=${MYSQL_USER}, DB=${MYSQL_DATABASE}`);
+console.error('주의: 비밀번호는 보안상 로그에 표시하지 않습니다.!');
+
 // 서버 포트 설정
 const PORT = parseInt(process.env.PORT || '3003');
 
